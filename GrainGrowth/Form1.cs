@@ -16,5 +16,10 @@ namespace GrainGrowth
         {
             InitializeComponent();
         }
+
+        private void NAmountLabel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
