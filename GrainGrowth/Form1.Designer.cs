@@ -28,49 +28,64 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.XSizeBox = new System.Windows.Forms.TextBox();
+            this.YSizeBox = new System.Windows.Forms.TextBox();
             this.XSizeLabel = new System.Windows.Forms.Label();
             this.YSizeLabel = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.NucleonAmountBox = new System.Windows.Forms.NumericUpDown();
             this.NAmountLabel = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.microstructureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.bitmapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.GenerateButton = new System.Windows.Forms.Button();
+            this.RunButton = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.test_box = new System.Windows.Forms.TextBox();
+            this.Neighbornhood = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.sizeArrayButton = new System.Windows.Forms.Button();
+            this.inclusionsInput = new System.Windows.Forms.TextBox();
+            this.inclusions = new System.Windows.Forms.Button();
+            this.clearButton = new System.Windows.Forms.Button();
+            this.boundaries = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NucleonAmountBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // pictureBox1
+            // pictureBox
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(62, 80);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(360, 273);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.pictureBox.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.pictureBox.Location = new System.Drawing.Point(62, 80);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(600, 460);
+            this.pictureBox.TabIndex = 0;
+            this.pictureBox.TabStop = false;
             // 
-            // textBox1
+            // XSizeBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(476, 80);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 1;
+            this.XSizeBox.Location = new System.Drawing.Point(693, 80);
+            this.XSizeBox.Name = "XSizeBox";
+            this.XSizeBox.Size = new System.Drawing.Size(100, 20);
+            this.XSizeBox.TabIndex = 1;
             // 
-            // textBox2
+            // YSizeBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(639, 80);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 2;
+            this.YSizeBox.Location = new System.Drawing.Point(813, 80);
+            this.YSizeBox.Name = "YSizeBox";
+            this.YSizeBox.Size = new System.Drawing.Size(100, 20);
+            this.YSizeBox.TabIndex = 2;
             // 
             // XSizeLabel
             // 
             this.XSizeLabel.AutoSize = true;
-            this.XSizeLabel.Location = new System.Drawing.Point(512, 61);
+            this.XSizeLabel.Location = new System.Drawing.Point(722, 51);
             this.XSizeLabel.Name = "XSizeLabel";
             this.XSizeLabel.Size = new System.Drawing.Size(37, 13);
             this.XSizeLabel.TabIndex = 3;
@@ -79,23 +94,23 @@
             // YSizeLabel
             // 
             this.YSizeLabel.AutoSize = true;
-            this.YSizeLabel.Location = new System.Drawing.Point(680, 60);
+            this.YSizeLabel.Location = new System.Drawing.Point(876, 51);
             this.YSizeLabel.Name = "YSizeLabel";
             this.YSizeLabel.Size = new System.Drawing.Size(37, 13);
             this.YSizeLabel.TabIndex = 4;
             this.YSizeLabel.Text = "Y Size";
             // 
-            // numericUpDown1
+            // NucleonAmountBox
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(515, 146);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown1.TabIndex = 5;
+            this.NucleonAmountBox.Location = new System.Drawing.Point(794, 123);
+            this.NucleonAmountBox.Name = "NucleonAmountBox";
+            this.NucleonAmountBox.Size = new System.Drawing.Size(120, 20);
+            this.NucleonAmountBox.TabIndex = 5;
             // 
             // NAmountLabel
             // 
             this.NAmountLabel.AutoSize = true;
-            this.NAmountLabel.Location = new System.Drawing.Point(541, 130);
+            this.NAmountLabel.Location = new System.Drawing.Point(690, 123);
             this.NAmountLabel.Name = "NAmountLabel";
             this.NAmountLabel.Size = new System.Drawing.Size(86, 13);
             this.NAmountLabel.TabIndex = 6;
@@ -108,14 +123,15 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(804, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1120, 24);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.microstructureToolStripMenuItem});
+            this.microstructureToolStripMenuItem,
+            this.bitmapToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -132,33 +148,167 @@
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.importToolStripMenuItem.Text = "Import";
+            this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.exportToolStripMenuItem.Text = "Export";
+            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
+            // 
+            // bitmapToolStripMenuItem
+            // 
+            this.bitmapToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.importToolStripMenuItem1,
+            this.exportToolStripMenuItem1});
+            this.bitmapToolStripMenuItem.Name = "bitmapToolStripMenuItem";
+            this.bitmapToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.bitmapToolStripMenuItem.Text = "Bitmap";
+            // 
+            // importToolStripMenuItem1
+            // 
+            this.importToolStripMenuItem1.Name = "importToolStripMenuItem1";
+            this.importToolStripMenuItem1.Size = new System.Drawing.Size(110, 22);
+            this.importToolStripMenuItem1.Text = "Import";
+            this.importToolStripMenuItem1.Click += new System.EventHandler(this.importToolStripMenuItem1_Click);
+            // 
+            // exportToolStripMenuItem1
+            // 
+            this.exportToolStripMenuItem1.Name = "exportToolStripMenuItem1";
+            this.exportToolStripMenuItem1.Size = new System.Drawing.Size(110, 22);
+            this.exportToolStripMenuItem1.Text = "Export";
+            this.exportToolStripMenuItem1.Click += new System.EventHandler(this.exportToolStripMenuItem1_Click);
+            // 
+            // GenerateButton
+            // 
+            this.GenerateButton.Location = new System.Drawing.Point(725, 313);
+            this.GenerateButton.Name = "GenerateButton";
+            this.GenerateButton.Size = new System.Drawing.Size(75, 23);
+            this.GenerateButton.TabIndex = 8;
+            this.GenerateButton.Text = "Generate";
+            this.GenerateButton.UseVisualStyleBackColor = true;
+            this.GenerateButton.Click += new System.EventHandler(this.GenerateButton_Click);
+            // 
+            // RunButton
+            // 
+            this.RunButton.Location = new System.Drawing.Point(838, 313);
+            this.RunButton.Name = "RunButton";
+            this.RunButton.Size = new System.Drawing.Size(75, 23);
+            this.RunButton.TabIndex = 9;
+            this.RunButton.Text = "Run";
+            this.RunButton.UseVisualStyleBackColor = true;
+            this.RunButton.Click += new System.EventHandler(this.RunButton_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
+            // 
+            // test_box
+            // 
+            this.test_box.Location = new System.Drawing.Point(84, 45);
+            this.test_box.Name = "test_box";
+            this.test_box.Size = new System.Drawing.Size(383, 20);
+            this.test_box.TabIndex = 10;
+            // 
+            // Neighbornhood
+            // 
+            this.Neighbornhood.FormattingEnabled = true;
+            this.Neighbornhood.Items.AddRange(new object[] {
+            "Moore",
+            "von Neumann"});
+            this.Neighbornhood.Location = new System.Drawing.Point(770, 237);
+            this.Neighbornhood.Name = "Neighbornhood";
+            this.Neighbornhood.Size = new System.Drawing.Size(121, 21);
+            this.Neighbornhood.TabIndex = 11;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(791, 210);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(74, 13);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "Neighborhood";
+            // 
+            // sizeArrayButton
+            // 
+            this.sizeArrayButton.Location = new System.Drawing.Point(770, 159);
+            this.sizeArrayButton.Name = "sizeArrayButton";
+            this.sizeArrayButton.Size = new System.Drawing.Size(75, 23);
+            this.sizeArrayButton.TabIndex = 13;
+            this.sizeArrayButton.Text = "Take Size";
+            this.sizeArrayButton.UseVisualStyleBackColor = true;
+            this.sizeArrayButton.Click += new System.EventHandler(this.sizeArrayButton_Click);
+            // 
+            // inclusionsInput
+            // 
+            this.inclusionsInput.Location = new System.Drawing.Point(770, 371);
+            this.inclusionsInput.Name = "inclusionsInput";
+            this.inclusionsInput.Size = new System.Drawing.Size(100, 20);
+            this.inclusionsInput.TabIndex = 14;
+            // 
+            // inclusions
+            // 
+            this.inclusions.Location = new System.Drawing.Point(917, 368);
+            this.inclusions.Name = "inclusions";
+            this.inclusions.Size = new System.Drawing.Size(75, 23);
+            this.inclusions.TabIndex = 15;
+            this.inclusions.Text = "Inclusions";
+            this.inclusions.UseVisualStyleBackColor = true;
+            this.inclusions.Click += new System.EventHandler(this.inclusions_Click);
+            // 
+            // clearButton
+            // 
+            this.clearButton.Location = new System.Drawing.Point(917, 446);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(75, 23);
+            this.clearButton.TabIndex = 16;
+            this.clearButton.Text = "Clear Grains";
+            this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+            // 
+            // boundaries
+            // 
+            this.boundaries.Location = new System.Drawing.Point(717, 445);
+            this.boundaries.Name = "boundaries";
+            this.boundaries.Size = new System.Drawing.Size(112, 23);
+            this.boundaries.TabIndex = 17;
+            this.boundaries.Text = "Add Boundaries";
+            this.boundaries.UseVisualStyleBackColor = true;
+            this.boundaries.Click += new System.EventHandler(this.boundaries_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 387);
+            this.ClientSize = new System.Drawing.Size(1120, 749);
+            this.Controls.Add(this.boundaries);
+            this.Controls.Add(this.clearButton);
+            this.Controls.Add(this.inclusions);
+            this.Controls.Add(this.inclusionsInput);
+            this.Controls.Add(this.sizeArrayButton);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.Neighbornhood);
+            this.Controls.Add(this.test_box);
+            this.Controls.Add(this.RunButton);
+            this.Controls.Add(this.GenerateButton);
             this.Controls.Add(this.NAmountLabel);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.NucleonAmountBox);
             this.Controls.Add(this.YSizeLabel);
             this.Controls.Add(this.XSizeLabel);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.YSizeBox);
+            this.Controls.Add(this.XSizeBox);
+            this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.Text = "Grain Growth";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NucleonAmountBox)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -168,18 +318,32 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.PictureBox pictureBox;
+        private System.Windows.Forms.TextBox XSizeBox;
+        private System.Windows.Forms.TextBox YSizeBox;
         private System.Windows.Forms.Label XSizeLabel;
         private System.Windows.Forms.Label YSizeLabel;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown NucleonAmountBox;
         private System.Windows.Forms.Label NAmountLabel;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem microstructureToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private System.Windows.Forms.Button GenerateButton;
+        private System.Windows.Forms.Button RunButton;
+        private System.Windows.Forms.ToolStripMenuItem bitmapToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.TextBox test_box;
+        private System.Windows.Forms.ComboBox Neighbornhood;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button sizeArrayButton;
+        private System.Windows.Forms.TextBox inclusionsInput;
+        private System.Windows.Forms.Button inclusions;
+        private System.Windows.Forms.Button clearButton;
+        private System.Windows.Forms.Button boundaries;
     }
 }
 
