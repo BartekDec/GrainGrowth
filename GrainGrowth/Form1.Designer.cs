@@ -46,17 +46,18 @@
             this.GenerateButton = new System.Windows.Forms.Button();
             this.RunButton = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.test_box = new System.Windows.Forms.TextBox();
             this.Neighbornhood = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.sizeArrayButton = new System.Windows.Forms.Button();
             this.inclusionsInput = new System.Windows.Forms.TextBox();
             this.inclusions = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
             this.boundaries = new System.Windows.Forms.Button();
+            this.inclusionsSize = new System.Windows.Forms.TrackBar();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NucleonAmountBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.inclusionsSize)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox
@@ -65,8 +66,10 @@
             this.pictureBox.Location = new System.Drawing.Point(62, 80);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(600, 460);
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
+            this.pictureBox.Click += new System.EventHandler(this.pictureBox_Click);
             // 
             // XSizeBox
             // 
@@ -74,6 +77,7 @@
             this.XSizeBox.Name = "XSizeBox";
             this.XSizeBox.Size = new System.Drawing.Size(100, 20);
             this.XSizeBox.TabIndex = 1;
+            this.XSizeBox.TextChanged += new System.EventHandler(this.XSizeBox_TextChanged);
             // 
             // YSizeBox
             // 
@@ -81,6 +85,7 @@
             this.YSizeBox.Name = "YSizeBox";
             this.YSizeBox.Size = new System.Drawing.Size(100, 20);
             this.YSizeBox.TabIndex = 2;
+            this.YSizeBox.TextChanged += new System.EventHandler(this.YSizeBox_TextChanged);
             // 
             // XSizeLabel
             // 
@@ -106,6 +111,7 @@
             this.NucleonAmountBox.Name = "NucleonAmountBox";
             this.NucleonAmountBox.Size = new System.Drawing.Size(120, 20);
             this.NucleonAmountBox.TabIndex = 5;
+            this.NucleonAmountBox.ValueChanged += new System.EventHandler(this.NucleonAmountBox_ValueChanged);
             // 
             // NAmountLabel
             // 
@@ -184,7 +190,7 @@
             // 
             // GenerateButton
             // 
-            this.GenerateButton.Location = new System.Drawing.Point(725, 313);
+            this.GenerateButton.Location = new System.Drawing.Point(718, 257);
             this.GenerateButton.Name = "GenerateButton";
             this.GenerateButton.Size = new System.Drawing.Size(75, 23);
             this.GenerateButton.TabIndex = 8;
@@ -194,7 +200,7 @@
             // 
             // RunButton
             // 
-            this.RunButton.Location = new System.Drawing.Point(838, 313);
+            this.RunButton.Location = new System.Drawing.Point(838, 257);
             this.RunButton.Name = "RunButton";
             this.RunButton.Size = new System.Drawing.Size(75, 23);
             this.RunButton.TabIndex = 9;
@@ -207,20 +213,13 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
             // 
-            // test_box
-            // 
-            this.test_box.Location = new System.Drawing.Point(84, 45);
-            this.test_box.Name = "test_box";
-            this.test_box.Size = new System.Drawing.Size(383, 20);
-            this.test_box.TabIndex = 10;
-            // 
             // Neighbornhood
             // 
             this.Neighbornhood.FormattingEnabled = true;
             this.Neighbornhood.Items.AddRange(new object[] {
             "Moore",
             "von Neumann"});
-            this.Neighbornhood.Location = new System.Drawing.Point(770, 237);
+            this.Neighbornhood.Location = new System.Drawing.Point(770, 210);
             this.Neighbornhood.Name = "Neighbornhood";
             this.Neighbornhood.Size = new System.Drawing.Size(121, 21);
             this.Neighbornhood.TabIndex = 11;
@@ -228,32 +227,22 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(791, 210);
+            this.label1.Location = new System.Drawing.Point(791, 179);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(74, 13);
             this.label1.TabIndex = 12;
             this.label1.Text = "Neighborhood";
             // 
-            // sizeArrayButton
-            // 
-            this.sizeArrayButton.Location = new System.Drawing.Point(770, 159);
-            this.sizeArrayButton.Name = "sizeArrayButton";
-            this.sizeArrayButton.Size = new System.Drawing.Size(75, 23);
-            this.sizeArrayButton.TabIndex = 13;
-            this.sizeArrayButton.Text = "Take Size";
-            this.sizeArrayButton.UseVisualStyleBackColor = true;
-            this.sizeArrayButton.Click += new System.EventHandler(this.sizeArrayButton_Click);
-            // 
             // inclusionsInput
             // 
-            this.inclusionsInput.Location = new System.Drawing.Point(770, 371);
+            this.inclusionsInput.Location = new System.Drawing.Point(725, 398);
             this.inclusionsInput.Name = "inclusionsInput";
             this.inclusionsInput.Size = new System.Drawing.Size(100, 20);
             this.inclusionsInput.TabIndex = 14;
             // 
             // inclusions
             // 
-            this.inclusions.Location = new System.Drawing.Point(917, 368);
+            this.inclusions.Location = new System.Drawing.Point(863, 395);
             this.inclusions.Name = "inclusions";
             this.inclusions.Size = new System.Drawing.Size(75, 23);
             this.inclusions.TabIndex = 15;
@@ -263,7 +252,7 @@
             // 
             // clearButton
             // 
-            this.clearButton.Location = new System.Drawing.Point(917, 446);
+            this.clearButton.Location = new System.Drawing.Point(863, 445);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(75, 23);
             this.clearButton.TabIndex = 16;
@@ -281,19 +270,35 @@
             this.boundaries.UseVisualStyleBackColor = true;
             this.boundaries.Click += new System.EventHandler(this.boundaries_Click);
             // 
+            // inclusionsSize
+            // 
+            this.inclusionsSize.Location = new System.Drawing.Point(725, 325);
+            this.inclusionsSize.Name = "inclusionsSize";
+            this.inclusionsSize.Size = new System.Drawing.Size(104, 45);
+            this.inclusionsSize.TabIndex = 18;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(860, 325);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(72, 13);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "Inclusion Size";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1120, 749);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.inclusionsSize);
             this.Controls.Add(this.boundaries);
             this.Controls.Add(this.clearButton);
             this.Controls.Add(this.inclusions);
             this.Controls.Add(this.inclusionsInput);
-            this.Controls.Add(this.sizeArrayButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Neighbornhood);
-            this.Controls.Add(this.test_box);
             this.Controls.Add(this.RunButton);
             this.Controls.Add(this.GenerateButton);
             this.Controls.Add(this.NAmountLabel);
@@ -311,6 +316,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.NucleonAmountBox)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.inclusionsSize)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -336,14 +342,14 @@
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.TextBox test_box;
         private System.Windows.Forms.ComboBox Neighbornhood;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button sizeArrayButton;
         private System.Windows.Forms.TextBox inclusionsInput;
         private System.Windows.Forms.Button inclusions;
         private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.Button boundaries;
+        private System.Windows.Forms.TrackBar inclusionsSize;
+        private System.Windows.Forms.Label label2;
     }
 }
 
