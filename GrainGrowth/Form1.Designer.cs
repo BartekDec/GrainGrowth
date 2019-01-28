@@ -223,6 +223,7 @@
             this.Neighbornhood.Name = "Neighbornhood";
             this.Neighbornhood.Size = new System.Drawing.Size(121, 21);
             this.Neighbornhood.TabIndex = 11;
+            this.Neighbornhood.SelectedIndexChanged += new System.EventHandler(this.Neighbornhood_SelectedIndexChanged);
             // 
             // label1
             // 

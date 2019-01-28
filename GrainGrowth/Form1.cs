@@ -60,6 +60,13 @@ namespace GrainGrowth
             {
                 temp1 = random.Next(1, YSize-1);
                 temp2 = random.Next(1, XSize-1);
+
+                while(grainCointainer[temp1,temp2].Value == 2)
+                {
+                    temp1 = random.Next(1, YSize - 1);
+                    temp2 = random.Next(1, XSize - 1);
+                }
+
                 grainCointainer[temp1, temp2].GrainId = i + 1;
                 grainCointainer[temp1, temp2].Value = 1;
               //  Console.WriteLine("Ziarno: "+i+" Wsp Y: " + temp1 + " X: " + temp2);
@@ -68,8 +75,8 @@ namespace GrainGrowth
         }
         public void randomInclusionAfter(int InclusionAmount, int size)
         {
+            graphic = Graphics.FromImage(checkpoint);
             borderCoordinates = new List<int[,]>();
-           
             for (int y = 2; y < YSize - 2; y++)
             {
                 for (int x = 2; x < XSize - 2; x++)
@@ -89,31 +96,75 @@ namespace GrainGrowth
                 }
             }
 
-            var localBorderCoordinates = borderCoordinates;
-            for (int i = 0; i < borderCoordinates.Count; i++)
+            if(borderCoordinates.Any())
             {
-               // Console.WriteLine(borderCoordinates[i][0,0]+ " " + borderCoordinates[i][0, 1]);
-            }
-            inclusionAfterArray = new int[InclusionAmount, 2];
-            Random rand = new Random();
-            for (int i = 0; i < InclusionAmount; i++)
-           
+                var localBorderCoordinates = borderCoordinates;
+                for (int i = 0; i < borderCoordinates.Count; i++)
+                {
+                    // Console.WriteLine(borderCoordinates[i][0,0]+ " " + borderCoordinates[i][0, 1]);
+                }
+                inclusionAfterArray = new int[InclusionAmount, 2];
+                Random rand = new Random();
+                for (int i = 0; i < InclusionAmount; i++)
+
+                {
+                    var randomBorderPoint = localBorderCoordinates[rand.Next(localBorderCoordinates.Count)];
+                    localBorderCoordinates.Remove(randomBorderPoint);
+
+                    SolidBrush brush = new SolidBrush(Color.Black);
+                    var inclusionX = (int)(randomBorderPoint[0, 0] - (double)(size / 2));
+                    var inclusionY = (int)(randomBorderPoint[0, 1] - (double)(size / 2));
+
+                    inclusionX = inclusionX < 2 ? 2 : (inclusionX > (XSize - 2) ? (XSize - 2) : inclusionX);
+                    inclusionY = inclusionY < 2 ? 2 : (inclusionY > (XSize - 2) ? (XSize - 2) : inclusionY);
+                    grainCointainer[inclusionX, inclusionY].Value = 2;
+                    graphic.FillRectangle(brush, inclusionX, inclusionY, size, size);
+                }
+            } else
             {
-                var randomBorderPoint = localBorderCoordinates[rand.Next(localBorderCoordinates.Count)];
-                localBorderCoordinates.Remove(randomBorderPoint);
+                Random rand = new Random();
+                for (int i = 0; i < InclusionAmount; i++)
+                {
+                    var inclusionX = rand.Next(XSize - 2) + 1;
+                    var inclusionY = rand.Next(YSize - 2) + 1;
 
-                SolidBrush brush = new SolidBrush(Color.Black);
-                var inclusionX = (int) (randomBorderPoint[0, 0] * 10 - (double) (size / 2) * 10);
-                var inclusionY = (int) (randomBorderPoint[0, 1] * 10 - (double) (size / 2) * 10);
+                    SolidBrush brush = new SolidBrush(Color.Black);
 
-                inclusionX = inclusionX < 2 * 10 ? 2 * 10 : (randomBorderPoint[0, 0] * 10 > (XSize - 2) * 10  ? (XSize - 2) * 10  : inclusionX);
-                inclusionY = inclusionX < 2 * 10 ? 2 * 10 : (randomBorderPoint[0, 1] * 10 > (XSize - 2) * 10 ? (XSize - 2) * 10 : inclusionY);
-                graphic.FillRectangle(brush, inclusionX , inclusionY, size * 10, size * 10);
-                pictureBox.Image = checkpoint;
-                pictureBox.Refresh();
+                    inclusionX = inclusionX < 2 ? 2 : (inclusionX > (XSize - 2) ? (XSize - 2) : inclusionX);
+                    inclusionY = inclusionX < 2 ? 2 : (inclusionY > (XSize - 2) ? (XSize - 2) : inclusionY);
+
+                    for (int ss = inclusionX; ss < inclusionX + size; ss++)
+                    {
+                        for (int sss = inclusionY; sss <= inclusionY + size; sss++)
+                        {
+                            if (ss > 0 && ss < XSize && sss > 0 && sss < YSize)
+                            {
+                                grainCointainer[ss, sss].Value = 2;
+                            }
+                        }
+                    }
+
+                    graphic.FillRectangle(brush, inclusionX, inclusionY, size, size);
+                   
+                }
             }
 
+            pictureBox.Image = checkpoint;
+            pictureBox.Refresh();
         }
+
+        private bool IsAnyInclusion(Grain[,] tab)
+        {
+            for(var x = 0; x < XSize; x++)
+            {
+                for (var y = 0; y <YSize;y++)
+                {
+                    if (tab[x,y].Value == 2) return true;
+                }
+            } 
+            return false;
+        }
+
         public void createGrainArrays(int XSize, int YSize)
         {
             grainCointainer = new Grain[YSize, XSize];
@@ -145,7 +196,7 @@ namespace GrainGrowth
         {
 
             colorArray = new Color[XSize * YSize + 1];
-            colorArray[0] = Color.Black;
+            colorArray[0] = Color.White;
             //colorArray[1] = Color.White;
             Random random = new Random();
             for (int i = 1; i <= (YSize*XSize); i++)
@@ -187,72 +238,68 @@ namespace GrainGrowth
         public  int drawGrain(Grain[,] grainCointainer, Color[] color, Bitmap checkpoint)
         {
             int sizeFirst, sizeSecond, sizeThird, temp;
-            if (isBitmap == true)
-            {
-                sizeFirst = 10;
-                sizeSecond = YSize - 10;
-                sizeThird = XSize - 10;
-                temp = 1;
-                isBitmap = false;
-            }
-            else
-            {
-                sizeFirst = 1;
-                sizeSecond = YSize - 1;
-                sizeThird = XSize - 1;
-                temp = 10;
-            }
+            sizeFirst = 1;
+            sizeSecond = YSize - 1;
+            sizeThird = XSize - 1;
+            temp = 1;
 
             int counter = 0;
             graphic = Graphics.FromImage(checkpoint);
-           
-
-           
           
-                for (int i = sizeFirst; i < sizeSecond; i++)
+            for (int i = sizeFirst; i < sizeSecond; i++)
+            {
+                for (int j = sizeFirst; j < sizeThird; j++)
                 {
-                    for (int j = sizeFirst; j < sizeThird; j++)
+                    if (grainCointainer[i, j].Value == 2)
                     {
+                        SolidBrush brush = new SolidBrush(Color.Black);
+                        graphic.FillRectangle(brush, i * temp, j * temp, temp, temp);
+                    }
+                    else
+                    {
+
                         SolidBrush brush = new SolidBrush(color[grainCointainer[i, j].GrainId]);
                         graphic.FillRectangle(brush, i * temp, j * temp, temp, temp);
-                        if (grainCointainer[i, j].Value == 0)
-                            counter++;
-                    
-
                     }
-                }
-            System.Threading.Thread.Sleep(100);
-            pictureBox.Image = checkpoint;
-            pictureBox.Refresh();
 
+                    if (grainCointainer[i, j].Value == 0)
+                            counter++; 
+                }
+            }
+            System.Threading.Thread.Sleep(10);
+            this.BeginInvoke((MethodInvoker)delegate {
+                pictureBox.Image = checkpoint;
+                pictureBox.Refresh();
+            });
+           
             return counter;
 
         }
-    
-
 
         private void GenerateButton_Click(object sender, EventArgs e)
         {
-            
-    
             randomGrain(XSize, YSize, NucleonAmount, random);
             isGrainActive = true;
             copyGrainArray(XSize, YSize, isGrainActive);
             drawGrain(grainCointainer, colorArray, checkpoint);
-            
         }
 
         private void RunButton_Click(object sender, EventArgs e)
         {
+            Task.Run(async () => await DrawGrainsAsync());
+        }
+
+        private async Task<bool> DrawGrainsAsync()
+        {
             int sizeFirst, sizeSecond, sizeThird;
 
             sizeFirst = 1;
-            sizeSecond = YSize-1;
-            sizeThird = XSize-1;
-            total = new int[YSize * XSize +1];
+            sizeSecond = YSize - 1;
+            sizeThird = XSize - 1;
+            total = new int[YSize * XSize + 1];
             int next = 0;
             int counter = 1;
-            while(counter > 0)
+            while (counter > 0)
             {
                 for (int i = sizeFirst; i < sizeSecond; i++)
                 {
@@ -262,13 +309,13 @@ namespace GrainGrowth
                         int x = rand.Next(0, 2);
                         maximum = 0;
                         id = 0;
-                        if (grainCointainer[i,j].Value == 0)
+                        if (grainCointainer[i, j].Value == 0 && grainCointainer[i,j].Value != 2)
                         {
-                            if(Neighbornhood.Text=="Moore")
-                                next = mooreMethod(grainCointainer, i, j);
-                            if (Neighbornhood.Text == "von Neumann")
-                                next = vonNeumannMethod(grainCointainer, i, j);
-                            if (maximum != 0 )
+                            if (NeighbornhoodType == "Moore")
+                            next = mooreMethod(grainCointainer, i, j);
+                            if (NeighbornhoodType == "von Neumann")
+                                 next = vonNeumannMethod(grainCointainer, i, j);
+                            if (maximum != 0)
                             {
                                 grainCointainerSecond[i, j].Value = 1;
                                 grainCointainerSecond[i, j].GrainId = id;
@@ -281,8 +328,10 @@ namespace GrainGrowth
                 copyGrainArray(XSize, YSize, isGrainActive);
                 counter = drawGrain(grainCointainer, colorArray, checkpoint);
             }
+                return await Task.FromResult<bool>(true);
 
         }
+
         private int vonNeumannMethod(Grain[,] grainCointainer, int i, int j)
         {
             int up, down, left, right;
@@ -294,8 +343,6 @@ namespace GrainGrowth
             for (int q = 1; q < NucleonAmount + 1; q++)
             {
                 total[q] = 0;
-
-
 
                 if (grainCointainer[up, j].GrainId == q) total[q]++;
                 if (grainCointainer[i, left].GrainId == q) total[q]++;
@@ -322,7 +369,6 @@ namespace GrainGrowth
             for (int k = 1; k < NucleonAmount + 1; k++)
             {
                 total[k] = 0;
-
 
                 if (grainCointainer[up, left].GrainId == k) total[k]++;
                 if (grainCointainer[up, j].GrainId == k) total[k]++;
@@ -364,9 +410,9 @@ namespace GrainGrowth
                 Color [] localColor = new Color[XSize * YSize + 1];
                 try
                 {
-                    for (int y = 10; y < imageImport.Width-10; y++)
+                    for (int y = 1; y < imageImport.Width-1; y++)
                     {
-                        for (int x = 10; x < imageImport.Height-10; x++)
+                        for (int x = 1; x < imageImport.Height-1; x++)
                         {
                             Color clr = imageImport.GetPixel(y, x);
                            
@@ -392,9 +438,9 @@ namespace GrainGrowth
                         colorArray[i] = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
                     }
 
-                    for (int y = 10; y < imageImport.Width - 10; y++)
+                    for (int y = 1; y < imageImport.Width - 1; y++)
                     {
-                        for (int x = 10; x < imageImport.Height - 10; x++)
+                        for (int x = 1; x < imageImport.Height - 1; x++)
                         {
                             Color clr = imageImport.GetPixel(y, x);
                             for (int i = 0; i < colors.Count; i++)
@@ -444,8 +490,8 @@ namespace GrainGrowth
                     NucleonAmount = Int32.Parse(sizes[0][2]);
                     createGrainArrays(XSize, YSize);
                     clearGrainValue(XSize, YSize);
-                    checkpoint = new Bitmap(10 * YSize, 10 * XSize);
-                    pictureBox.Size = new Size(10 * YSize, 10 * XSize);
+                    checkpoint = new Bitmap(YSize, XSize);
+                    pictureBox.Size = new Size(YSize, XSize);
                     random = setGrainColor(NucleonAmount, XSize, YSize);
                     List<String[]> line = File.ReadLines(file).Select(value => value.Split(' ').Take(4).ToArray()).ToList();
                     for (int i = 1; i < line.Count; i++)
@@ -505,8 +551,8 @@ namespace GrainGrowth
         private void RedrawSpace()
         {
             random = setGrainColor(NucleonAmount, XSize, YSize);
-            checkpoint = new Bitmap(10 * YSize, 10 * XSize);
-            pictureBox.Size = new Size(10 * YSize, 10 * XSize);
+            checkpoint = new Bitmap( YSize, XSize);
+            pictureBox.Size = new Size(YSize, XSize);
             createGrainArrays(XSize, YSize);
             clearGrainValue(XSize, YSize);
         }
@@ -567,7 +613,7 @@ namespace GrainGrowth
 
                             if (borderCoordinates[i][0, 0] != y && borderCoordinates[i][0, 1] != x)
                             {
-                                graphic.FillRectangle(brush, y * 10, x * 10, 10, 10);
+                                graphic.FillRectangle(brush, y, x , 1, 1);
 
 
                             }
@@ -591,21 +637,25 @@ namespace GrainGrowth
                 {
                     for (int x = 1; x < XSize-1; x++)
                     {
-                        int[,] temp = new int[1, 2] { { y, x } };
-                      
-                        for (int i = 0; i < globalBorder.Count; i++)
-                        {
-                            graphic.FillRectangle(brush, y * 10, x * 10, 10, 10);
+                        //int[,] temp = new int[1, 2] { { y, x } };
+                        graphic.FillRectangle(brush, y, x, 1, 1);
+                        
+                        //for (int i = 0; i < globalBorder.Count; i++)
+                       // {
+                           // graphic.FillRectangle(brush, y, x, 1, 1);
+
+
                            /* if (globalBorder[i][0,0] == y && globalBorder[i][0,1] == x)
                             {
-                                graphic.FillRectangle(brush, y * 10, x * 10, 10, 10);
+                                graphic.FillRectangle(brush, y, x, 1, 1);
                             }
                             else
                             {
-                               // graphic.FillRectangle(brush, y * 10, x * 10, 10, 10);
+                               // graphic.FillRectangle(brush, y, x, 1, 1);
                             }
                             */
-                        }
+                       // }
+                        
 
 
                     }
@@ -616,7 +666,7 @@ namespace GrainGrowth
                 for (int i = 0; i < globalBorder.Count; i++)
                 {
                     SolidBrush brush2 = new SolidBrush(Color.Black);
-                    graphic.FillRectangle(brush2, globalBorder[i][0,0] * 10, globalBorder[i][0,1] * 10, 10, 10);
+                    graphic.FillRectangle(brush2, globalBorder[i][0,0], globalBorder[i][0,1], 1, 1);
                     
                    
                 }
@@ -699,7 +749,7 @@ namespace GrainGrowth
             SolidBrush brush = new SolidBrush(Color.Black);
             for (int i = 0; i < borderCoordinates.Count; i++)
             {
-                graphic.FillRectangle(brush, borderCoordinates[i][0, 0] * 10, borderCoordinates[i][0, 1] * 10, 10, 10);
+                graphic.FillRectangle(brush, borderCoordinates[i][0, 0], borderCoordinates[i][0, 1], 1, 1);
             }
 
 
@@ -718,8 +768,8 @@ namespace GrainGrowth
 
             this.Cursor = new Cursor(Cursor.Current.Handle);
             var mouseEventArgs = e as MouseEventArgs;
-            int xCoordinate = (mouseEventArgs.Y) / 10; ;
-            int yCoordinate = (mouseEventArgs.X)/10;
+            int xCoordinate = (mouseEventArgs.Y);
+            int yCoordinate = (mouseEventArgs.X);
             Console.WriteLine("X: " + xCoordinate + " Y: " + yCoordinate);
             //test_box.Text = MousePosition.Y.ToString();
             isGrainClick = true;
@@ -732,10 +782,12 @@ namespace GrainGrowth
 
         }
 
+        private void Neighbornhood_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            NeighbornhoodType = Neighbornhood.Text;
+        }
 
-
-      
-
+        public string NeighbornhoodType { get; set; }
 
         private void boundaries_Click(int X, int Y)
 
@@ -860,7 +912,7 @@ namespace GrainGrowth
             SolidBrush brush = new SolidBrush(Color.Black);
             for (int i = 0; i < borderCoordinates.Count; i++)
             {
-                graphic.FillRectangle(brush, borderCoordinates[i][0, 0] * 10, borderCoordinates[i][0, 1] * 10, 10, 10);
+                graphic.FillRectangle(brush, borderCoordinates[i][0, 0], borderCoordinates[i][0, 1], 1, 1);
             }
 
 
